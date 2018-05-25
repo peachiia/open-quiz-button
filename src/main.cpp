@@ -30,7 +30,7 @@ int teamInput_uniqueActiveID = 0;
 bool teamInput_isActive[TEAM_MAX];
 bool teamOutput_isActive[TEAM_MAX];
 int teamInput_Pin[] = {A0, A1, A2, A3, A4, A5};
-int teamOutput_Pin[] = {3, 4, 5, 6, 7, 8};
+int teamOutput_Pin[] = {2, 3, 4, 5, 6, 7};
 
 
 
@@ -44,9 +44,9 @@ bool boxButton_longPressedThreshold = 2000 / BOXIO_TASK_PERIOD; // 2000 ms
 bool boxBuzzer_isActive;
 bool boxLed_isActive;
 
-int boxButton_Pin = 11;
-int boxBuzzer_Pin = 9;
-int boxLed_Pin = 10;
+int boxButton_Pin = 10;
+int boxBuzzer_Pin = 8;
+int boxLed_Pin = 9;
 
 
 
