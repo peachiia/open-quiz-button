@@ -26,7 +26,6 @@ int teamOutput_Pin[] = {3, 4, 5, 6, 7, 8};
 
 
 
-
 bool boxButton_isActive; // Current State
 bool boxButton_isHold;   // Holding State
 
@@ -95,6 +94,10 @@ void task_teamio_update(int period)
             teamInput_uniqueActiveID = activeID;
         }
 
+        for (int i = 0; i < TEAM_MAX; i++) {
+            digitalWrite(teamOutput_Pin[i], teamOutput_isActive[i]);
+        }
+
         STATIC_TIMER_UPDATE;
     }
 }
@@ -123,8 +126,10 @@ void task_boxio_update(int period)
         else {
             boxButton_longPressedCounter = 0;
         }
+
         digitalWrite(boxLed_Pin, boxLed_isActive);
         digitalWrite(boxBuzzer_Pin, boxBuzzer_isActive);
+
         STATIC_TIMER_UPDATE;
     }
 }
