@@ -12,6 +12,10 @@ void task_teamio(int period);
 void init_boxio();
 void task_boxio(int period);
 
+#define QUIZ_TASK_PERIOD 20
+void init_quiz();
+void task_quiz(int period);
+
 
 
 #define TEAM_MAX 6
@@ -47,12 +51,14 @@ void setup()
 {
     init_boxio();
     init_teamio();
+    init_quiz();
 }
 
 void loop() 
 { 
-    task_teamio(5);
-    task_boxio(50);
+    task_teamio(TEAMIO_TASK_PERIOD);
+    task_boxio(BOXIO_TASK_PERIOD);
+    task_quiz(QUIZ_TASK_PERIOD);
 }
 
 
@@ -131,6 +137,26 @@ void task_boxio(int period)
         digitalWrite(boxLed_Pin, boxLed_isActive);
         digitalWrite(boxBuzzer_Pin, boxBuzzer_isActive);
 
+        STATIC_TIMER_UPDATE;
+    }
+}
+
+
+
+void init_quiz()
+{
+    pinMode(boxButton_Pin, INPUT);
+    pinMode(boxBuzzer_Pin, OUTPUT);
+    pinMode(boxLed_Pin, OUTPUT);
+}
+
+
+void task_quiz(int period)
+{
+    STATIC_TIMER_INIT;
+    if (STATIC_TIMER_CHECK)
+    {
+        
         STATIC_TIMER_UPDATE;
     }
 }
