@@ -120,6 +120,7 @@ void task_teamio(int period)
 void init_boxio()
 {
     pinMode(boxButton_Pin, INPUT);
+    // digitalWrite(boxButton_Pin, HIGH); // Internal Puul-Up Enabled
     pinMode(boxBuzzer_Pin, OUTPUT);
     pinMode(boxLed_Pin, OUTPUT);
 }
@@ -130,7 +131,8 @@ void task_boxio(int period)
     STATIC_TIMER_INIT;
     if (STATIC_TIMER_CHECK)
     {
-        boxButton_isActive = digitalRead(boxButton_Pin);
+        // boxButton_isActive = (digitalRead(boxButton_Pin) == LOW); // For Active Low
+        boxButton_isActive = (digitalRead(boxButton_Pin) == HIGH); // For Active High
         if (boxButton_isActive) {
             boxButton_longPressedCounter++;
             if (boxButton_longPressedCounter >= boxButton_longPressedThreshold) {
