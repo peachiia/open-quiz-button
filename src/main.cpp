@@ -141,6 +141,8 @@ void task_boxio(int period)
             boxButton_longPressedCounter = 0;
         }
 
+        boxLed_isActive = boxButton_isActive; // Led will follow the Button State
+
         digitalWrite(boxLed_Pin, boxLed_isActive);
         digitalWrite(boxBuzzer_Pin, boxBuzzer_isActive);
 
