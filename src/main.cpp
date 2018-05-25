@@ -7,14 +7,17 @@
 #define TEAMIO_TASK_PERIOD 5
 void init_teamio();
 void task_teamio(int period);
+void clearTeamIOFlag();
 
 #define BOXIO_TASK_PERIOD 20
 void init_boxio();
 void task_boxio(int period);
+void clearBoxIOFlag();
 
 #define QUIZ_TASK_PERIOD 20
 void init_quiz();
 void task_quiz(int period);
+
 
 
 
@@ -44,6 +47,10 @@ bool boxLed_isActive;
 int boxButton_Pin = 0;
 int boxBuzzer_Pin = 0;
 int boxLed_Pin = 0;
+
+
+
+bool quiz_displayFlag = false;
 
 
 
@@ -145,9 +152,7 @@ void task_boxio(int period)
 
 void init_quiz()
 {
-    pinMode(boxButton_Pin, INPUT);
-    pinMode(boxBuzzer_Pin, OUTPUT);
-    pinMode(boxLed_Pin, OUTPUT);
+
 }
 
 
@@ -156,8 +161,35 @@ void task_quiz(int period)
     STATIC_TIMER_INIT;
     if (STATIC_TIMER_CHECK)
     {
-        
+        if (quiz_displayFlag) {
+            if (boxButton_isActive) {
+                clearTeamIOFlag();
+                quiz_displayFlag = false;
+            }
+        }
+        else {
+            if (teamInput_uniqueActiveFlag) {
+                quiz_displayFlag = true;
+                teamOutput_isActive[teamInput_uniqueActiveID] = true;
+            }
+        }
+
+        boxBuzzer_isActive = quiz_displayFlag;
+
         STATIC_TIMER_UPDATE;
     }
 }
 
+
+void clearTeamIOFlag()
+{
+    teamInput_uniqueActiveFlag = false;
+    for (int i = 0; i < TEAM_MAX; i++) {
+        teamOutput_isActive[i] = false;
+    }
+}
+
+void clearBoxIOFlag()
+{
+    boxButton_longPressedFlag = 0;
+}
