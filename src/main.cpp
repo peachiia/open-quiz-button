@@ -6,11 +6,12 @@
 
 #define TEAMIO_TASK_PERIOD 5
 void init_teamio();
-void task_teamio_update(int period);
+void task_teamio(int period);
 
-#define BOXIO_TASK_PERIOD 50
+#define BOXIO_TASK_PERIOD 20
 void init_boxio();
-void task_boxio_update(int period);
+void task_boxio(int period);
+
 
 
 #define TEAM_MAX 6
@@ -50,8 +51,8 @@ void setup()
 
 void loop() 
 { 
-    task_teamio_update(5);
-    task_boxio_update(50);
+    task_teamio(5);
+    task_boxio(50);
 }
 
 
@@ -65,7 +66,7 @@ void init_teamio()
 }
 
 
-void task_teamio_update(int period)
+void task_teamio(int period)
 {
     STATIC_TIMER_INIT;
     if (STATIC_TIMER_CHECK)
@@ -111,7 +112,7 @@ void init_boxio()
 }
 
 
-void task_boxio_update(int period)
+void task_boxio(int period)
 {
     STATIC_TIMER_INIT;
     if (STATIC_TIMER_CHECK)
