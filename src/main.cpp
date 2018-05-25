@@ -44,9 +44,9 @@ bool boxButton_longPressedThreshold = 2000 / BOXIO_TASK_PERIOD; // 2000 ms
 bool boxBuzzer_isActive;
 bool boxLed_isActive;
 
-int boxButton_Pin = 0;
-int boxBuzzer_Pin = 0;
-int boxLed_Pin = 0;
+int boxButton_Pin = 11;
+int boxBuzzer_Pin = 9;
+int boxLed_Pin = 10;
 
 
 
@@ -194,4 +194,4 @@ void clearTeamIOFlag()
 void clearBoxIOFlag()
 {
     boxButton_longPressedFlag = 0;
-}
+} 
