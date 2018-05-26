@@ -8,11 +8,13 @@
 void init_teamio();
 void task_teamio(int period);
 void clearTeamIOFlag();
+void printTeamIOStatus();
 
 #define BOXIO_TASK_PERIOD 20
 void init_boxio();
 void task_boxio(int period);
 void clearBoxIOFlag();
+
 
 #define QUIZ_TASK_PERIOD 20
 void init_quiz();
@@ -52,10 +54,14 @@ int boxLed_Pin = 9;
 
 bool quiz_displayFlag = false;
 
+int val[TEAM_MAX];
+char serialbuffer[128];
+
 
 
 void setup() 
 {
+    Serial.begin(115200);
     init_boxio();
     init_teamio();
     init_quiz();
@@ -88,7 +94,8 @@ void task_teamio(int period)
         int activeID = -1;
         
         for (int i = 0; i < TEAM_MAX; i++) {
-            teamInput_isActive[i] = analogRead(teamInput_Pin[i]) > teamInput_threshold;
+            val[i] = analogRead(teamInput_Pin[i]);
+            teamInput_isActive[i] = val[i] > teamInput_threshold;
             if (teamInput_isActive[i]) 
             {
                 if (activeFlag == false) {
@@ -103,6 +110,7 @@ void task_teamio(int period)
             }
         }
 
+
         if (teamInput_uniqueActiveFlag == false) {
             teamInput_uniqueActiveFlag = activeFlag;
             teamInput_uniqueActiveID = activeID;
@@ -111,6 +119,8 @@ void task_teamio(int period)
         for (int i = 0; i < TEAM_MAX; i++) {
             digitalWrite(teamOutput_Pin[i], teamOutput_isActive[i]);
         }
+
+        printTeamIOStatus();
 
         STATIC_TIMER_UPDATE;
     }
@@ -192,8 +202,14 @@ void clearTeamIOFlag()
         teamOutput_isActive[i] = false;
     }
 }
-
+ 
 void clearBoxIOFlag()
 {
     boxButton_longPressedFlag = 0;
 } 
+
+void printTeamIOStatus()
+{
+    sprintf(serialbuffer, "%4d %4d %4d %4d %4d %4d\n", val[0], val[1], val[2], val[3], val[4], val[5]);
+    Serial.println(serialbuffer);
+}
