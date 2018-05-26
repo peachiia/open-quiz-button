@@ -24,7 +24,7 @@ void task_quiz(int period);
 
 
 #define TEAM_MAX 6
-int teamInput_threshold = 512;
+int teamInput_threshold = 950;
 
 bool teamInput_uniqueActiveFlag = false;
 int teamInput_uniqueActiveID = 0;
